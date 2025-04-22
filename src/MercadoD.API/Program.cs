@@ -1,4 +1,7 @@
 using MercadoD.Infrastructure;
+using Mapster;
+using MercadoD.API.Models;
+using MercadoD.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Registra controllers
+builder.Services.AddControllers();
+// Configura mapeamento DTO -> Entidade de domínio usando Mapster
+TypeAdapterConfig<CreateLancamentoDto, LancamentoFinanceiro>
+    .NewConfig()
+    .ConstructUsing(src => new LancamentoFinanceiro(Guid.NewGuid(), src.Valor, src.Tipo, src.DataHora, src.LojaId, src.Descricao));
 
 var app = builder.Build();
 
@@ -24,6 +33,9 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+// Mapeia endpoints de controllers
+app.MapControllers();
+// Endpoint de exemplo
 app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
