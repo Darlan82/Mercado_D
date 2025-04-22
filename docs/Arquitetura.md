@@ -57,11 +57,10 @@ Foram classificados dois tipos principais de ativos:
 
 **O modelo de racionalização utilizado foi baseado nos 5Rs:**
 
-- Rehost: nenhuma aplicação
-- Refactor: APIs e microsserviços construídos do zero
-- Rearchitect: planejamento modular para expansões futuras
-- Rebuild: "to do"
-- Replace: "to do"
+**- Rehost, Replace:** nenhuma aplicação
+**- Refactor:** APIs e microsserviços construídos do zero
+**- Rearchitect:** planejamento modular para expansões futuras
+**- Rebuild:** Reconstruir a aplicação financeira do zero usando Azure
 
 ### 2.2 Alinhamento Organizacional
 A adoção de cloud exige capacitação e mudança de cultura. Abaixo as áreas e responsáveis:
@@ -69,6 +68,7 @@ A adoção de cloud exige capacitação e mudança de cultura. Abaixo as áreas 
 - TI da Matriz: responsável pela homologação da governança e segurança
 - Gerentes Regionais: pilotos do rollout por loja
 Esses atores integram o time de estratégia de nuvem, que será responsável por liderar a implantação.
+
 ### 2.3 Plano de Capacitação
 Para garantir o sucesso da adoção, foram definidos treinamentos:
 
@@ -125,7 +125,7 @@ A arquitetura do sistema Mercado D. adota o modelo orientado a eventos com compo
 
 ### 4.2 Componentes Principais
 - **Azure API Management:** gerenciamento e exposição de APIs públicas e internas
-- **Azure App Service (Web API):** APIs de lançamento e consulta, implementadas em .NET 9
+- **Azure App Service (Web API):** APIs de lançamento e consulta, implementadas em .NET 8
 - **Azure SQL Database:** armazenamento transacional dos lançamentos com replicação geo-reduntante
 - **Azure Service Bus:** mensageria assíncrona entre APIs e processamento de consolidação
 - **Azure Functions:** workers para consolidação diária e geração de relatórios
