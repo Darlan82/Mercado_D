@@ -16,7 +16,8 @@ using Mapster;
 /// Controller para lançamentos financeiros e consulta de saldos.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+// Define rota base /api/lancamentos
+[Route("api/lancamentos")]
 public class LancamentoController : ControllerBase
 {
     private readonly ILancamentoService _lancamentoService;
@@ -46,7 +47,7 @@ public class LancamentoController : ControllerBase
             await _lancamentoService.RegistrarLancamentoAsync(lancamento);
 
             // Retorna 201 Created com o id do novo recurso
-            var uri = $"/api/lancamento/{lancamento.Id}";
+            var uri = $"/api/lancamentos/{lancamento.Id}";
             return Created(uri, new { id = lancamento.Id });
         }
         catch (ArgumentException ex)

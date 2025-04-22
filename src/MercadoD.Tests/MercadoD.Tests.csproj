@@ -26,6 +26,11 @@
     <ProjectReference Include="..\MercadoD.Application\MercadoD.Application.csproj" />
     <ProjectReference Include="..\MercadoD.Domain\MercadoD.Domain.csproj" />
     <ProjectReference Include="..\MercadoD.Infrastructure\MercadoD.Infrastructure.csproj" />
+    <ProjectReference Include="..\MercadoD.API\MercadoD.API.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
