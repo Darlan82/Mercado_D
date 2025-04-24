@@ -1,6 +1,6 @@
 namespace MercadoD.Application.Services;
 
-using MercadoD.Domain.Entities;
+using MercadoD.Domain.Loja.FluxoCaixa;
 
 /// <summary>
 /// Serviço de aplicação para registro de lançamentos financeiros.

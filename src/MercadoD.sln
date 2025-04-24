@@ -13,13 +13,36 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.API", "MercadoD.AP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Tests", "MercadoD.Tests\MercadoD.Tests.csproj", "{3953DC2B-4F10-41BA-91A6-A626053573DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Host", "MercadoD.Host\MercadoD.Host.csproj", "{AAE8451C-0E14-4620-BF4D-BB95786273BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47475794-FEA8-4522-849D-AD6CB1C04985}"
+	ProjectSection(SolutionItems) = preProject
+		CreateMigrations.ps1 = CreateMigrations.ps1
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{34A78B47-4A39-4234-B930-FCDB1F93FE1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Services", "2 - Services", "{35CD9142-E6ED-43E3-BD49-E3062449AFB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Applications", "3 - Applications", "{0F774DA7-1BD8-437F-B117-D3DBC418AC90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", "{AD1343D9-7B4F-42D5-AF60-5A0156E94D74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Persistence", "5 - Persistence", "{CD8B93E4-FE61-470B-85EF-2D6CA88B3984}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "X - Cross-Cutting", "X - Cross-Cutting", "{914D6A7E-17AD-45F2-8DB0-841EE6796824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Persistence.Sql", "MercadoD.Persistence.Sql\MercadoD.Persistence.Sql.csproj", "{62292BD7-80B2-4977-9F83-C91FF5E9EDFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Ioc", "MercadoD.Ioc\MercadoD.Ioc.csproj", "{E24AFF4B-FE16-41FC-A897-06B80304C124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Persistence.Sql.Migration", "MercadoD.Persistence.Sql.Migration\MercadoD.Persistence.Sql.Migration.csproj", "{4901AC61-46E3-409E-89F4-112D2788BBFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B2703D3-4270-4C53-85AA-0CB2F8E16E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,5 +65,32 @@ Global
 		{3953DC2B-4F10-41BA-91A6-A626053573DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3953DC2B-4F10-41BA-91A6-A626053573DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3953DC2B-4F10-41BA-91A6-A626053573DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAE8451C-0E14-4620-BF4D-BB95786273BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAE8451C-0E14-4620-BF4D-BB95786273BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAE8451C-0E14-4620-BF4D-BB95786273BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAE8451C-0E14-4620-BF4D-BB95786273BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62292BD7-80B2-4977-9F83-C91FF5E9EDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62292BD7-80B2-4977-9F83-C91FF5E9EDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62292BD7-80B2-4977-9F83-C91FF5E9EDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62292BD7-80B2-4977-9F83-C91FF5E9EDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24AFF4B-FE16-41FC-A897-06B80304C124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24AFF4B-FE16-41FC-A897-06B80304C124}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24AFF4B-FE16-41FC-A897-06B80304C124}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24AFF4B-FE16-41FC-A897-06B80304C124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4901AC61-46E3-409E-89F4-112D2788BBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4901AC61-46E3-409E-89F4-112D2788BBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4901AC61-46E3-409E-89F4-112D2788BBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4901AC61-46E3-409E-89F4-112D2788BBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0B2703D3-4270-4C53-85AA-0CB2F8E16E9B} = {AD1343D9-7B4F-42D5-AF60-5A0156E94D74}
+		{6F3D9691-5A5E-4B36-BE2F-28264B3C7A05} = {0F774DA7-1BD8-437F-B117-D3DBC418AC90}
+		{E5689166-A9A4-4851-94D8-185859CD128B} = {914D6A7E-17AD-45F2-8DB0-841EE6796824}
+		{1C11FA43-CB3E-44D5-A5B0-85ACE513C883} = {34A78B47-4A39-4234-B930-FCDB1F93FE1C}
+		{62292BD7-80B2-4977-9F83-C91FF5E9EDFB} = {CD8B93E4-FE61-470B-85EF-2D6CA88B3984}
+		{4901AC61-46E3-409E-89F4-112D2788BBFA} = {CD8B93E4-FE61-470B-85EF-2D6CA88B3984}
 	EndGlobalSection
 EndGlobal

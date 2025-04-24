@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.15" />
+    
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="9.4.0" />
+    
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.11.1" />
+    
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.11.1" />
+    
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.11.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="Mapster" Version="7.4.0" />
   </ItemGroup>
@@ -15,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MercadoD.Application\MercadoD.Application.csproj" />
     <ProjectReference Include="..\MercadoD.Infrastructure\MercadoD.Infrastructure.csproj" />
+    <ProjectReference Include="..\MercadoD.Ioc\MercadoD.Ioc.csproj" />
   </ItemGroup>
 
 </Project>
