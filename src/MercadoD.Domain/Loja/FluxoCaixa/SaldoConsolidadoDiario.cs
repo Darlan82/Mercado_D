@@ -1,4 +1,5 @@
 ﻿using MercadoD.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {
@@ -13,6 +14,9 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
 
         public Guid ContaId { get; protected set; }
         public ContaFinanceira Conta { get; protected set; } = null!; // Fix for CS8618
+
+        [Timestamp]
+        public byte[] Version { get; set; } = null!;
 
         public SaldoConsolidadoDiario(DateTime data, decimal saldoPrevisto, decimal saldoRealizado, Guid contaId)
         {

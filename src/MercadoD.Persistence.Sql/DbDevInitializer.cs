@@ -1,4 +1,5 @@
 ﻿using MercadoD.Domain.Loja;
+using MercadoD.Domain.Loja.FluxoCaixa;
 using Microsoft.EntityFrameworkCore;
 
 namespace MercadoD.Persistence.Sql
@@ -19,7 +20,23 @@ namespace MercadoD.Persistence.Sql
                 setLoja.Add(loja1);
             }
 
-            context.SaveChanges();
+            var setConta = context.Set<ContaFinanceira>();
+
+            var ccDespesasInternas = await setConta.FirstOrDefaultAsync(c => c.Nome == "Despesas internas");
+            if (ccDespesasInternas == null)
+            {
+                ccDespesasInternas = new ContaFinanceira(loja1.Id, "Despesas internas", 0, ContaFinanceiraTipo.APagar);
+                setConta.Add(ccDespesasInternas);
+            }
+
+            var ccFornecedores = await setConta.FirstOrDefaultAsync(c => c.Nome == "Fornecedores");
+            if (ccFornecedores == null)
+            {
+                ccFornecedores = new ContaFinanceira(loja1.Id, "Fornecedores", 0, ContaFinanceiraTipo.AReceber);
+                setConta.Add(ccFornecedores);
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

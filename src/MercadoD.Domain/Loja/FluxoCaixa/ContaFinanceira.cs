@@ -1,4 +1,5 @@
 ﻿using MercadoD.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {
@@ -11,6 +12,9 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
 
         public Guid LojaId { get; protected set; }
         public Loja Loja { get; protected set; } = null!;
+
+        [Timestamp]
+        public byte[] Version { get; set; } = null!;
 
         public ContaFinanceira(Guid lojaId, string nome, decimal saldoPrevisto,
             ContaFinanceiraTipo tipo)

@@ -17,8 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Host", "MercadoD.H
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47475794-FEA8-4522-849D-AD6CB1C04985}"
 	ProjectSection(SolutionItems) = preProject
-		CreateMigrations.ps1 = CreateMigrations.ps1
 		Directory.Packages.props = Directory.Packages.props
+		AddMigrations.ps1 = AddMigrations.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation", "1 - Presentation", "{34A78B47-4A39-4234-B930-FCDB1F93FE1C}"

@@ -12,4 +12,7 @@ Caso não tenha, instale com o comando: \
 
 ### 2. Atualizar de Migração
 
+#### 2.1 Adiconar uma nova migração
+Abra um terminal em PowerSell na pasta `src` e execute o script ` .\AddMigrations.ps1`.
+Ele vai adicionar uma nova migração com sufixo `Ming_yyyyMMddHHmmss`.
 

@@ -1,39 +1,21 @@
 ﻿using MercadoD.Domain.Loja;
 using MercadoD.Domain.Loja.FluxoCaixa;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 
 namespace MercadoD.Persistence.Sql.Data
 {
     internal class MercadoEFContext : DbContext
     {
-        //private readonly IHostEnvironment _env;
-
         public MercadoEFContext(DbContextOptions<MercadoEFContext> options)
         : base(options)
-        {
-            //_env = env;            
+        {        
         }
 
         public DbSet<Loja> Lojas { get; set; } = null!;
         public DbSet<ContaFinanceira> ContasFinanceiras { get; set; } = null!;
         public DbSet<LancamentoFinanceiro> LancamentosFinanceiros { get; set; } = null!;
         public DbSet<SaldoConsolidadoDiario> SaldosConsolidadosDiario { get; set; } = null!;
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-
-        //    if (!optionsBuilder.IsConfigured && _env.IsDevelopment())
-        //    {
-        //        optionsBuilder.UseAsyncSeeding(async (context, _, cancellationToken) =>
-        //        {
-        //            await DbDevInitializer.InitializeAsync(context);
-        //        });
-        //    }
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +37,7 @@ namespace MercadoD.Persistence.Sql.Data
                 entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.SaldoPrevisto).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Tipo).IsRequired();
+                entity.Property(e => e.Version).IsRowVersion();
                 entity.HasOne(e => e.Loja)
                       .WithMany()
                       .HasForeignKey(e => e.LojaId)
@@ -83,6 +66,7 @@ namespace MercadoD.Persistence.Sql.Data
                 entity.Property(e => e.Data).IsRequired();
                 entity.Property(e => e.SaldoPrevisto).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.SaldoRealizado).HasColumnType("decimal(18,2)");
+                entity.Property(e => e.Version).IsRowVersion();
                 entity.HasOne(e => e.Conta)
                       .WithMany()
                       .HasForeignKey(e => e.ContaId)
