@@ -1,8 +1,8 @@
-﻿using MercadoD.Domain.Entities;
+﻿using MercadoD.Infrastructure.Time;
 
 namespace MercadoD.Domain.Loja
 {
-    public class Loja : EntityPadrao
+    public class Loja : EntityBase
     {
         public string Nome { get; private set; }
 

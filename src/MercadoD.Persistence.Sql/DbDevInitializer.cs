@@ -1,5 +1,6 @@
 ﻿using MercadoD.Domain.Loja;
 using MercadoD.Domain.Loja.FluxoCaixa;
+using MercadoD.Infrastructure.Time;
 using Microsoft.EntityFrameworkCore;
 
 namespace MercadoD.Persistence.Sql
@@ -25,14 +26,14 @@ namespace MercadoD.Persistence.Sql
             var ccDespesasInternas = await setConta.FirstOrDefaultAsync(c => c.Nome == "Despesas internas");
             if (ccDespesasInternas == null)
             {
-                ccDespesasInternas = new ContaFinanceira(loja1.Id, "Despesas internas", 0, ContaFinanceiraTipo.APagar);
+                ccDespesasInternas = new ContaFinanceira(loja1.Id, "Despesas internas", ContaFinanceiraTipo.APagar);
                 setConta.Add(ccDespesasInternas);
             }
 
             var ccFornecedores = await setConta.FirstOrDefaultAsync(c => c.Nome == "Fornecedores");
             if (ccFornecedores == null)
             {
-                ccFornecedores = new ContaFinanceira(loja1.Id, "Fornecedores", 0, ContaFinanceiraTipo.AReceber);
+                ccFornecedores = new ContaFinanceira(loja1.Id, "Fornecedores", ContaFinanceiraTipo.AReceber);
                 setConta.Add(ccFornecedores);
             }
 

@@ -36,6 +36,7 @@ namespace MercadoD.Persistence.Sql.Data
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.SaldoPrevisto).HasColumnType("decimal(18,2)");
+                entity.Property(e => e.SaldoRealizado).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Tipo).IsRequired();
                 entity.Property(e => e.Version).IsRowVersion();
                 entity.HasOne(e => e.Loja)
@@ -52,6 +53,10 @@ namespace MercadoD.Persistence.Sql.Data
                 entity.Property(e => e.Valor).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Descricao).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.DtVencimento).IsRequired();
+                entity.Property(e => e.DtPagamento);
+                entity.Property(e => e.DtLancamento).IsRequired();
+                entity.Property(e => e.SaldoPrevistoContabilizado).IsRequired();
+                entity.Property(e => e.SaldoRealizadoContabilizado).IsRequired();
                 entity.HasOne(e => e.Conta)
                       .WithMany()
                       .HasForeignKey(e => e.ContaId)

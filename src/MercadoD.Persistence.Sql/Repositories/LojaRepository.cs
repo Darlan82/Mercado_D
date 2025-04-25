@@ -10,5 +10,10 @@ namespace MercadoD.Persistence.Sql.Repositories
             : base(dataContext)
         {
         }
+
+        public override IQueryable<Loja> GetDefaultQuery()
+        {
+            return DataContext.GetQuery<Loja>();
+        }
     }
 }

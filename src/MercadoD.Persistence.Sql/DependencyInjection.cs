@@ -1,4 +1,5 @@
 ﻿using MercadoD.Domain.Loja;
+using MercadoD.Domain.Loja.FluxoCaixa;
 using MercadoD.Infrastructure.Data;
 using MercadoD.Persistence.Sql.Data;
 using MercadoD.Persistence.Sql.Repositories;
@@ -41,6 +42,8 @@ namespace MercadoD.Persistence.Sql
 
             // Registra repositórios
             services.AddScoped<ILojaRepository, LojaRepository>();
+            services.AddScoped<ILancamentoFinanceiroRepository, LancamentoFinanceiroRepository>();
+            services.AddScoped<IContaFinanceiraRepository, ContaFinanceiraRepository>();
 
             return builder;
         }
@@ -53,7 +56,7 @@ namespace MercadoD.Persistence.Sql
 
             await db.Database.MigrateAsync();
 
-            var env = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
+            var env = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();            
 
             if (env.IsDevelopment())
             {

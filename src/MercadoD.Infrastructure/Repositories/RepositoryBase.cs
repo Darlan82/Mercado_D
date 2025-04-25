@@ -13,6 +13,13 @@ namespace MercadoD.Infrastructure.Repositories
             DataContext = dataContext;
         }
 
+        public abstract IQueryable<TEntity> GetDefaultQuery();
+
+        public virtual async Task<TEntity?> GetByIdAsync(object id)
+        {
+            return await DataContext.GetByIdAsync<TEntity>(id);
+        }
+
         protected virtual async Task<IEnumerable<TEntity>> GetAsync(
              Expression<Func<TEntity, bool>>? filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,

@@ -4,6 +4,9 @@ namespace MercadoD.Infrastructure.Data
 {
     public interface IDataContext : IDisposable
     {
+        public IQueryable<TEntity> GetQuery<TEntity>()
+            where TEntity : class;
+
         public Task<IEnumerable<TEntity>> GetAsync<TEntity>(
             Expression<Func<TEntity, bool>>? filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -11,7 +14,7 @@ namespace MercadoD.Infrastructure.Data
 
         public Task InsertAsync<TEntity>(TEntity entity) where TEntity : class;
 
-        public Task<TEntity?> GetByIDAsync<TEntity>(object id) where TEntity : class;
+        public Task<TEntity?> GetByIdAsync<TEntity>(object id) where TEntity : class;
 
         public Task DeleteAsync<TEntity>(object id) where TEntity : class;
 

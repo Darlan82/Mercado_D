@@ -34,6 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MercadoD.Application\MercadoD.Application.csproj" />
+    <ProjectReference Include="..\MercadoD.Infrastructure\MercadoD.Infrastructure.csproj" />
     <ProjectReference Include="..\MercadoD.Persistence.Sql\MercadoD.Persistence.Sql.csproj" />
   </ItemGroup>
 

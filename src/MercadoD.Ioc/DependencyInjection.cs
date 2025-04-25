@@ -1,4 +1,6 @@
-﻿using MercadoD.Persistence.Sql;
+﻿using MercadoD.Application;
+using MercadoD.Infrastructure;
+using MercadoD.Persistence.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,10 +56,11 @@ namespace MercadoD.Ioc
         public static TBuilder AddDddInfrastructure<TBuilder>(this TBuilder builder)
             where TBuilder : IHostApplicationBuilder
         {
-            //var services = builder.Services;
-            //var configuration = builder.Configuration;
-
+            //Injeção de dependência da cama de persistencia
             builder.AddPersistence();
+
+            //Injeção de dependência da cama de aplicação
+            builder.AddApplication();
 
             return builder;
         }

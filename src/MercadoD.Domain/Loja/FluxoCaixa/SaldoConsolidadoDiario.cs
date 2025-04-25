@@ -1,9 +1,9 @@
-﻿using MercadoD.Domain.Entities;
+﻿using MercadoD.Infrastructure.Time;
 using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {
-    public class SaldoConsolidadoDiario : EntityPadrao
+    public class SaldoConsolidadoDiario : EntityBase
     {
         public DateTime Data { get; protected set; }
 
@@ -18,11 +18,10 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
         [Timestamp]
         public byte[] Version { get; set; } = null!;
 
-        public SaldoConsolidadoDiario(DateTime data, decimal saldoPrevisto, decimal saldoRealizado, Guid contaId)
+        public SaldoConsolidadoDiario(DateTime data, Guid contaId)
+            : base()
         {
             Data = data;            
-            SaldoPrevisto = saldoPrevisto;
-            SaldoRealizado = saldoRealizado;
             ContaId = contaId;
         }
     }

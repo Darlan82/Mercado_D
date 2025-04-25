@@ -1,21 +1,24 @@
-﻿namespace MercadoD.Domain.Entities
+﻿using MercadoD.Infrastructure.Time;
+
+namespace MercadoD.Domain
 {
-    public abstract class EntityPadrao
+    public abstract class EntityBase
     {
         public Guid Id { get; protected set; }
         public DateTime DtCriacao { get; protected set; }
         public DateTime? DtAlteracao { get; protected set; }
         public bool Inativo { get; protected set; }
+               
 
-        protected EntityPadrao()
+        protected EntityBase()
         {
             Id = Guid.NewGuid();
-            DtCriacao = DateTime.UtcNow;
+            DtCriacao = Clock.UtcNow;
         }
 
         public void AlterarDataAlteracao()
         {
-            DtAlteracao = DateTime.UtcNow;
+            DtAlteracao = Clock.UtcNow;
         }
     }
 }

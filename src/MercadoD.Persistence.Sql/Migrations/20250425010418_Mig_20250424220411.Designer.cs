@@ -4,6 +4,7 @@ using MercadoD.Persistence.Sql.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MercadoD.Persistence.Sql.Migrations
 {
     [DbContext(typeof(MercadoEFContext))]
-    partial class MercadoEFContextModelSnapshot : ModelSnapshot
+    [Migration("20250425010418_Mig_20250424220411")]
+    partial class Mig_20250424220411
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
