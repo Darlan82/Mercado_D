@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using FluentValidation;
 
 namespace MercadoD.Ioc
 {
@@ -25,7 +26,7 @@ namespace MercadoD.Ioc
         {
             //builder.ConfigureOpenTelemetry();
 
-            builder.AddDefaultHealthChecks();
+            builder.AddDefaultHealthChecks();            
 
             builder.Services.AddProblemDetails();
             builder.Services.AddServiceDiscovery();

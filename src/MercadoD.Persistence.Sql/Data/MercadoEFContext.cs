@@ -26,7 +26,8 @@ namespace MercadoD.Persistence.Sql.Data
             {
                 entity.ToTable("Lojas");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Nome).IsRequired()
+                    .HasMaxLength(100);
             });
 
             // Mapping for ContaFinanceira  
@@ -34,7 +35,8 @@ namespace MercadoD.Persistence.Sql.Data
             {
                 entity.ToTable("ContasFinanceiras");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Nome).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Nome).IsRequired()
+                    .HasMaxLength(FluxoCaixaConstants.ContaFinanceira.NomeMaxLength);
                 entity.Property(e => e.SaldoPrevisto).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.SaldoRealizado).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Tipo).IsRequired();
@@ -51,7 +53,8 @@ namespace MercadoD.Persistence.Sql.Data
                 entity.ToTable("LancamentosFinanceiros");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Valor).HasColumnType("decimal(18,2)");
-                entity.Property(e => e.Descricao).IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Descricao).IsRequired()
+                    .HasMaxLength(FluxoCaixaConstants.LancamentoFinanceiro.DescricaoMaxLength);
                 entity.Property(e => e.DtVencimento).IsRequired();
                 entity.Property(e => e.DtPagamento);
                 entity.Property(e => e.DtLancamento).IsRequired();

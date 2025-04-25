@@ -1,3 +1,5 @@
+//using FluentValidation;
+using FluentValidation.AspNetCore;
 using MercadoD.Ioc;
 
 public class Program
@@ -16,6 +18,9 @@ public class Program
 
         // Registra controllers
         builder.Services.AddControllers();
+
+        // Auto-validation
+        builder.Services.AddFluentValidationAutoValidation();     
 
         // Configura mapeamento DTO -> Entidade de domínio usando Mapster
         //TypeAdapterConfig<CreateLancamentoDto, LancamentoFinanceiro>

@@ -2,7 +2,6 @@
 using MassTransit.Mediator;
 using MercadoD.Application.Data;
 using MercadoD.Application.Loja.FluxoCaixa.GetContaFinanceira;
-using MercadoD.Domain.Loja.FluxoCaixa;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -34,11 +33,11 @@ namespace MercadoD.API.Controllers
 
         [HttpGet("{PaginaAtual}/{QtdRegistros}")]
         [SwaggerOperation(Summary = "Recupera um lista de Contas Financeiras")]
-        [ProducesResponseType(typeof(IEnumerable<ContaFinanceira>), StatusCodes.Status200OK)]        
+        [ProducesResponseType(typeof(PagedResult<ContaFinanceiraDto>), StatusCodes.Status200OK)]        
         public async Task<IActionResult> GetAll([FromRoute] GetAllContaFinanceiraQuery query)
         {
             var client = _mediator.CreateRequestClient<GetAllContaFinanceiraQuery>();
-            var response = await client.GetResponse<MercadoD.Application.Data.PagedResult<ContaFinanceiraDto>>(query);
+            var response = await client.GetResponse<PagedResult<ContaFinanceiraDto>>(query);
             return Ok(response.Message);
         }
     }
