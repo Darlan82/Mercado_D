@@ -14,5 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MercadoD.Domain\MercadoD.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
 
 </Project>

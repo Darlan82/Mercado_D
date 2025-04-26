@@ -1,5 +1,4 @@
-﻿using MercadoD.Infrastructure.Time;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {
@@ -17,6 +16,12 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
 
         [Timestamp]
         public byte[] Version { get; set; } = null!;
+
+        #pragma warning disable CS8618 // Construtor para o EF
+        private SaldoConsolidadoDiario()
+        {
+        }
+        #pragma warning restore CS8618
 
         public SaldoConsolidadoDiario(DateTime data, Guid contaId)
             : base()

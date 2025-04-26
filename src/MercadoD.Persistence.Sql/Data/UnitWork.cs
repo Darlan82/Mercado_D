@@ -1,4 +1,5 @@
-﻿using MercadoD.Infrastructure.Data;
+﻿using MercadoD.Domain;
+using MercadoD.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace MercadoD.Persistence.Sql.Data
@@ -12,13 +13,13 @@ namespace MercadoD.Persistence.Sql.Data
             _dbContext = dbContext;            
         }
 
-        public void Commit()
+        public async Task CommitAsync()
         {
-            _dbContext.SaveChanges();
+            //await SaveAsync();
 
             if (_dbContext.Database.CurrentTransaction != null)
             {
-                _dbContext.Database.CommitTransaction();
+                await _dbContext.Database.CommitTransactionAsync();
             }
         }
 
@@ -27,17 +28,28 @@ namespace MercadoD.Persistence.Sql.Data
             //_dbContext.Dispose();
         }
 
-        public void Rollback()
+        public async Task<IDbTransaction> BeginTransactionAsync()
         {
-            if (_dbContext.Database.CurrentTransaction != null)
-            {
-                _dbContext.Database.RollbackTransaction();
-            }
+            return new DbTransaction(await _dbContext.Database.BeginTransactionAsync());
         }
 
-        public void Save()
+        //public async Task RollbackAsync()
+        //{
+        //    if (_dbContext.Database.CurrentTransaction != null)
+        //    {
+        //        await _dbContext.Database.RollbackTransactionAsync();
+        //    }
+        //}
+
+        public async Task SaveAsync()
         {
-            _dbContext.SaveChanges();
+            foreach(var e in _dbContext.ChangeTracker.Entries<EntityBase>())
+            {
+                if (e.State == EntityState.Modified) 
+                    e.Entity.AlterarDataAlteracao();
+            }
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace MercadoD.Domain.Loja.FluxoCaixa
+﻿using MercadoD.Domain.Loja.FluxoCaixa.DomainEvents;
+
+namespace MercadoD.Domain.Loja.FluxoCaixa
 {
     public class LancamentoFinanceiro : EntityBase
     {
@@ -16,20 +18,34 @@
         public bool SaldoPrevistoContabilizado { get; set; }
         public bool SaldoRealizadoContabilizado { get; set; }
 
-        public LancamentoFinanceiro(Guid contaId, decimal valor, string descricao)
+        #pragma warning disable CS8618 // Construtor para o EF
+        private LancamentoFinanceiro()
+        {
+        }
+        #pragma warning restore CS8618
+
+        private LancamentoFinanceiro(Guid contaId, decimal valor, string descricao)
             : base()
         {
             ContaId = contaId;
             Valor = valor;
             Descricao = descricao ?? throw new ArgumentNullException(nameof(descricao));
+
+            AddDomainEvent(new LancamentoFinanceiroCreatedDomainEvent(Id, ContaId));
         }
 
-        public LancamentoFinanceiro(Guid contaId, decimal valor, string descricao,
+        private LancamentoFinanceiro(Guid contaId, decimal valor, string descricao,
             DateTime? dtLancamento = null, DateTime? dtVencimento = null)
             : this(contaId, valor, descricao)
         {
             DtLancamento = dtLancamento.HasValue ? dtLancamento.Value : this.DtCriacao;
             DtVencimento = dtVencimento.HasValue ? dtVencimento.Value : this.DtLancamento;
+        }
+
+        public static LancamentoFinanceiro Create(Guid contaId, decimal valor, string descricao,
+            DateTime? dtLancamento = null, DateTime? dtVencimento = null)
+        {
+            return new LancamentoFinanceiro(contaId, valor, descricao, dtLancamento, dtVencimento);
         }
     }
 }

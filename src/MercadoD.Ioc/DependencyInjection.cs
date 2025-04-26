@@ -1,12 +1,11 @@
-﻿using MercadoD.Application;
-using MercadoD.Infrastructure;
+﻿using MassTransit;
+using MercadoD.Application;
 using MercadoD.Persistence.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using FluentValidation;
 
 namespace MercadoD.Ioc
 {
@@ -62,6 +61,25 @@ namespace MercadoD.Ioc
 
             //Injeção de dependência da cama de aplicação
             builder.AddApplication();
+
+            //Configura o Mediator
+            builder.AddMediator();
+
+            return builder;
+        }
+
+        internal static TBuilder AddMediator<TBuilder>(this TBuilder builder)
+            where TBuilder : IHostApplicationBuilder
+        {
+            builder.Services.AddMediator(cfg =>
+            {
+                Application.DependencyInjection.AddMediatorConsumers(cfg);
+
+                cfg.ConfigureMediator((context, cfg) =>
+                {                    
+                    Persistence.Sql.DependencyInjection.ConfigMediator(context, cfg);
+                });
+            });
 
             return builder;
         }

@@ -44,7 +44,7 @@ public class LancamentoController : ControllerBase
     [HttpPost]
     [SwaggerOperation(Summary = "Cria um novo Lancamento Financeiro")]    
     [ProducesResponseType(typeof(LancamentoFinanceiroDto), StatusCodes.Status201Created)]
-    public async Task<IActionResult> Post([FromBody] CreateLancamentoFinanceiroCommand command)
+    public async Task<IActionResult> Post(CreateLancamentoFinanceiroCommand command)
     {
         var client = _mediator.CreateRequestClient<CreateLancamentoFinanceiroCommand>();
         var response = await client.GetResponse<CreateLancamentoFinanceiroCommandResponse>(command);

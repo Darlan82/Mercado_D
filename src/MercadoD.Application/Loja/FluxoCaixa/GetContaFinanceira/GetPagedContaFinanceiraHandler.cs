@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MercadoD.Application.Data;
 using MercadoD.Domain.Loja.FluxoCaixa;
 
 namespace MercadoD.Application.Loja.FluxoCaixa.GetContaFinanceira

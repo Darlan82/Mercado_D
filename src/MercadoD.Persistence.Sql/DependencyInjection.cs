@@ -1,7 +1,12 @@
-﻿using MercadoD.Domain.Loja;
+﻿using MassTransit;
+using MassTransit.Internals;
+using MassTransit.Mediator;
+using MercadoD.Domain;
+using MercadoD.Domain.Loja;
 using MercadoD.Domain.Loja.FluxoCaixa;
 using MercadoD.Infrastructure.Data;
 using MercadoD.Persistence.Sql.Data;
+using MercadoD.Persistence.Sql.Filters;
 using MercadoD.Persistence.Sql.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,9 +48,14 @@ namespace MercadoD.Persistence.Sql
             // Registra repositórios
             services.AddScoped<ILojaRepository, LojaRepository>();
             services.AddScoped<ILancamentoFinanceiroRepository, LancamentoFinanceiroRepository>();
-            services.AddScoped<IContaFinanceiraRepository, ContaFinanceiraRepository>();
+            services.AddScoped<IContaFinanceiraRepository, ContaFinanceiraRepository>();            
 
             return builder;
+        }
+
+        public static void ConfigMediator(IMediatorRegistrationContext context, IMediatorConfigurator cfg)
+        {
+            cfg.UseConsumeFilter(typeof(EventsFilter<>), context, x => x.Include(type => !type.HasInterface<IDomainEvent>()));
         }
 
         public static async Task ApplyMigration<THost>(this THost host)

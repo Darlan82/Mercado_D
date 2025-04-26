@@ -6,6 +6,8 @@
 
         //void Rollback();
 
-        void Save();
+        Task<IDbTransaction> BeginTransactionAsync();
+
+        Task SaveAsync();
     }
 }

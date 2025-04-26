@@ -17,6 +17,12 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
         [Timestamp]
         public byte[] Version { get; set; } = null!;
 
+        #pragma warning disable CS8618 // Construtor para o EF
+        private ContaFinanceira()
+        {            
+        }
+        #pragma warning restore CS8618
+
         public ContaFinanceira(Guid lojaId, string nome, ContaFinanceiraTipo tipo)
             : base()
         {
