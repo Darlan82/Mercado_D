@@ -8,7 +8,7 @@ Este repositório contém o material do projeto técnico **Mercado D.**, uma inicia
 
 **DENTRO DO PROJETO TEM UM CONTROLE DE FLUXO DE CAIXA PARCIAL COM SALDO DE CONTAS E CONSOLIDAÇÃO DIÁRIA.**
 
-Este projeto é fictício e utilizado apenas para fins de demonstração, desafios técnicos e treinamento.
+Este projeto é fictício e utilizado apenas para fins de demonstração, desafios técnicos e treinamento. \
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Licença
@@ -17,12 +17,12 @@ Este projeto está licenciado sob a licença [MIT](LICENSE.txt).
 
 ## Estrutura do Repositório
 
-- `/docs` — Documentação de estratégia, planejamento, arquitetura, governança e gerenciamento.
+- [/docs](/docs)  — Documentação de estratégia, planejamento, arquitetura, governança e gerenciamento.
 	- O documento principal é o [Arquitetura.md](docs/Arquitetura.md), que contém uma visão geral da arquitetura e dos componentes principais.
 
-- `/src` — Código-fonte das APIs e serviços (.NET)
-- `/infra` — Código de infraestrutura como código (IaC) para provisionamento de recursos no Azure
-- `/diagrams` — Diagramas de arquitetura e fluxos de trabalho
+- [/src](/src) — Código-fonte das APIs e serviços (.NET)
+- [/infra](/infra) — Código de infraestrutura como código (IaC) para provisionamento de recursos no Azure
+- [/diagrams](/diagrams) — Diagramas de arquitetura e fluxos de trabalho
 
 ## Como rodar o projeto
 

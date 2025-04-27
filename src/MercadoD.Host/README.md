@@ -29,10 +29,10 @@ Nessa caso o endereço fica `tcp:127.0.0.1,53028`.
 
 #### 1.1.3 Criação de Base de dados e população dos dados
 
-O Aspire executa uma tarefa de migração que está no projeto `MercadoD.Persistence.Sql` automaticamente. \
+O Aspire executa uma tarefa de migração que está no projeto `MercadoD.Infra.Persistence.Sql.JobMigration` automaticamente. \
 A migração cria as tabelas e somente popula os dados para o desenvolvedor no ambiente de desenvolvimento e
-sua definição está na classe `DbDevInitializer` no projeto `MercadoD.Persistence.Sql`.
+sua definição está na classe `DbDevInitializer` no projeto `MercadoD.Infra.Persistence.Sql`.
 
-Para saber como trabalhar com a migração veja o documento [MercadoD.Persistence.Sql](../MercadoD.Persistence.Sql/README.md).
+Para saber como trabalhar com a migração do Banco de Dados veja o documento [MercadoD.Infra.Persistence.Sql](../MercadoD.Infra.Persistence.Sql/README.md).
 
 ## 2. Ambiente de Produção e homologação
