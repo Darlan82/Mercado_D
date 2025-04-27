@@ -28,10 +28,31 @@ namespace MercadoD.Persistence.Sql.Data
             //_dbContext.Dispose();
         }
 
-        public async Task<IDbTransaction> BeginTransactionAsync()
+        public async Task ExecuteTransactionAsync(Func<Task> operation)
         {
-            return new DbTransaction(await _dbContext.Database.BeginTransactionAsync());
+            var strategy = _dbContext.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(async () =>
+            {
+                await using var transaction = await _dbContext.Database.BeginTransactionAsync();
+                try
+                {
+                    await operation.Invoke();
+
+                    await SaveAsync();
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            });
         }
+
+        //public async Task<IDbTransaction> BeginTransactionAsync()
+        //{
+        //    return new DbTransaction(await _dbContext.Database.BeginTransactionAsync());
+        //}
 
         //public async Task RollbackAsync()
         //{

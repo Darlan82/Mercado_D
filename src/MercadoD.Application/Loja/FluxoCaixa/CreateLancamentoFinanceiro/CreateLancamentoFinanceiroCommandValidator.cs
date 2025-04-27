@@ -9,6 +9,11 @@ namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro
         {
             RuleFor(p => p.Descricao).NotEmpty().MaximumLength(FluxoCaixaConstants.LancamentoFinanceiro.DescricaoMaxLength)
                 .MinimumLength(FluxoCaixaConstants.LancamentoFinanceiro.DescricaoMinLength);
+
+            RuleFor(p => p.DtLancamento).NotEmpty();
+
+            RuleFor(p => p.DtPagamento)
+                .GreaterThanOrEqualTo(p => p.DtLancamento);
         }
     }
 }

@@ -25,7 +25,9 @@ namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro
                 command.Message.ContaId,
                 command.Message.Valor,
                 command.Message.Descricao,
-                command.Message.DtVencimento);
+                command.Message.DtLancamento,
+                command.Message.DtVencimento,
+                command.Message.DtPagamento);
 
             await _lancamentoFinanceiroRepository.InsertAsync(lancamento);
 

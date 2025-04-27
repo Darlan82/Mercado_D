@@ -1,4 +1,5 @@
 ﻿using MercadoD.Domain.Loja.FluxoCaixa.DomainEvents;
+using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {
@@ -18,7 +19,10 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
         public bool SaldoPrevistoContabilizado { get; set; }
         public bool SaldoRealizadoContabilizado { get; set; }
 
-        #pragma warning disable CS8618 // Construtor para o EF
+        [Timestamp]
+        public byte[] Version { get; set; } = null!;
+
+#pragma warning disable CS8618 // Construtor para o EF
         private LancamentoFinanceiro()
         {
         }
@@ -35,17 +39,26 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
         }
 
         private LancamentoFinanceiro(Guid contaId, decimal valor, string descricao,
-            DateTime? dtLancamento = null, DateTime? dtVencimento = null)
+            DateTime? dtLancamento = null, DateTime? dtVencimento = null, DateTime? dtPagamento = null)
             : this(contaId, valor, descricao)
         {
             DtLancamento = dtLancamento.HasValue ? dtLancamento.Value : this.DtCriacao;
             DtVencimento = dtVencimento.HasValue ? dtVencimento.Value : this.DtLancamento;
+            DtPagamento = dtPagamento;
+
+            if (DtPagamento.HasValue && DtPagamento.Value < DtLancamento)
+                throw new ArgumentException(nameof(dtPagamento), "Data de pagamento inválida");            
         }
 
         public static LancamentoFinanceiro Create(Guid contaId, decimal valor, string descricao,
-            DateTime? dtLancamento = null, DateTime? dtVencimento = null)
+            DateTime? dtLancamento = null, DateTime? dtVencimento = null, DateTime? dtPagamento = null)
         {
-            return new LancamentoFinanceiro(contaId, valor, descricao, dtLancamento, dtVencimento);
+            return new LancamentoFinanceiro(contaId, valor, descricao, dtLancamento, dtVencimento,
+                dtPagamento);
         }
+
+        public bool IsSameDayLancamentoAndDtPagamento()
+            => DtPagamento.HasValue && DateOnly.FromDateTime(this.DtLancamento) 
+                == DateOnly.FromDateTime(this.DtPagamento.Value);
     }
 }

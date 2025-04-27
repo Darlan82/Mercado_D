@@ -48,7 +48,8 @@ namespace MercadoD.Persistence.Sql
             // Registra repositórios
             services.AddScoped<ILojaRepository, LojaRepository>();
             services.AddScoped<ILancamentoFinanceiroRepository, LancamentoFinanceiroRepository>();
-            services.AddScoped<IContaFinanceiraRepository, ContaFinanceiraRepository>();            
+            services.AddScoped<IContaFinanceiraRepository, ContaFinanceiraRepository>();
+            services.AddScoped<ISaldoConsolidadoDiarioRepository, SaldoConsolidadoDiarioRepository>();
 
             return builder;
         }

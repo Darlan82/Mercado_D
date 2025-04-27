@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MercadoD.Infrastructure.ValueType;
+using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {
     public class SaldoConsolidadoDiario : EntityBase
     {
-        public DateTime Data { get; protected set; }
+        public DayStamp Data { get; private set; }
 
         public decimal SaldoTotal { get { return SaldoPrevisto + SaldoRealizado; } }
 
@@ -23,11 +24,21 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
         }
         #pragma warning restore CS8618
 
-        public SaldoConsolidadoDiario(DateTime data, Guid contaId)
+        public SaldoConsolidadoDiario(DayStamp data, Guid contaId)
             : base()
         {
-            Data = data;            
+            Data = data;
             ContaId = contaId;
+        }
+
+        public void SomaSaldoPrevisto(decimal valor)
+        {
+            SaldoPrevisto += valor;
+        }
+
+        public void SomaSaldoRealizado(decimal valor)
+        {
+            SaldoRealizado += valor;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MercadoD.Domain.Loja;
 using MercadoD.Domain.Loja.FluxoCaixa;
+using MercadoD.Infrastructure.ValueType;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -60,6 +61,7 @@ namespace MercadoD.Persistence.Sql.Data
                 entity.Property(e => e.DtLancamento).IsRequired();
                 entity.Property(e => e.SaldoPrevistoContabilizado).IsRequired();
                 entity.Property(e => e.SaldoRealizadoContabilizado).IsRequired();
+                entity.Property(e => e.Version).IsRowVersion();
                 entity.HasOne(e => e.Conta)
                       .WithMany()
                       .HasForeignKey(e => e.ContaId)
@@ -71,7 +73,12 @@ namespace MercadoD.Persistence.Sql.Data
             {
                 entity.ToTable("SaldosConsolidadosDiario");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Data).IsRequired();
+                entity.Property(e => e.Data)                    
+                    .HasConversion(
+                        d => d.Value,
+                        v => DayStamp.FromInt(v))
+                    .HasColumnType("int")
+                    .IsRequired();
                 entity.Property(e => e.SaldoPrevisto).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.SaldoRealizado).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.Version).IsRowVersion();
@@ -79,6 +86,12 @@ namespace MercadoD.Persistence.Sql.Data
                       .WithMany()
                       .HasForeignKey(e => e.ContaId)
                       .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.ContaId);
+                entity.HasIndex(e => new { e.ContaId, e.Data })
+                    .IsUnique()
+                    .HasDatabaseName("IX_Conta_Data")
+                    ;
             });
         }
     }
