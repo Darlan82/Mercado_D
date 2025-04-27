@@ -18,7 +18,8 @@ Este projeto está licenciado sob a licença [MIT](LICENSE.txt).
 ## Estrutura do Repositório
 
 - [/docs](/docs)  — Documentação de estratégia, planejamento, arquitetura, governança e gerenciamento.
-	- O documento principal é o [Arquitetura.md](docs/Arquitetura.md), que contém uma visão geral da arquitetura e dos componentes principais.
+	- Visão arquitetural da solução [Arquitetura](docs/Arquitetura.md).
+	- Visão da arquitetura do sistema [ArquiteturaSistema](docs/ArquiteturaSistema.md).
 
 - [/src](/src) — Código-fonte das APIs e serviços (.NET)
 - [/infra](/infra) — Código de infraestrutura como código (IaC) para provisionamento de recursos no Azure
