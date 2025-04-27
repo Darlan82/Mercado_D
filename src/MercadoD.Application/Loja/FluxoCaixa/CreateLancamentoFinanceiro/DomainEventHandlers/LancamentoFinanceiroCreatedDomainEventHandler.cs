@@ -1,9 +1,9 @@
 ﻿using MassTransit;
 using MercadoD.Domain.Loja.FluxoCaixa;
 using MercadoD.Domain.Loja.FluxoCaixa.DomainEvents;
-using MercadoD.Infrastructure.Data;
-using MercadoD.Infrastructure.Time;
-using MercadoD.Infrastructure.ValueType;
+using MercadoD.Common.Data;
+using MercadoD.Common.Time;
+using MercadoD.Common.ValueType;
 using Microsoft.Extensions.Logging;
 
 namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro.DomainEventHandlers

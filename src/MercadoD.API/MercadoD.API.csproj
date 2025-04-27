@@ -6,8 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+ 
+
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MassTransit" Version="8.4.0" />
     
@@ -30,8 +31,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MercadoD.Application\MercadoD.Application.csproj" />
-    <ProjectReference Include="..\MercadoD.Infrastructure\MercadoD.Infrastructure.csproj" />
-    <ProjectReference Include="..\MercadoD.Ioc\MercadoD.Ioc.csproj" />
+    <ProjectReference Include="..\MercadoD.Common\MercadoD.Common.csproj" />
+    <ProjectReference Include="..\MercadoD.Di.Ioc\MercadoD.Di.Ioc.csproj" />
   </ItemGroup>
 
 </Project>

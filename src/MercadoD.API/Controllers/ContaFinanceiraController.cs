@@ -25,7 +25,7 @@ namespace MercadoD.API.Controllers
             var client = _mediator.CreateRequestClient<GetContaFinanceiraQuery>();
             var response = await client.GetResponse<ContaFinanceiraDto, NotFoundResponse>(query);
 
-            if (response.Is(out Response<ContaFinanceiraDto> ok))
+            if (response.Is(out Response<ContaFinanceiraDto>? ok))
                 return Ok(ok.Message);
 
             return NotFound();

@@ -30,7 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MercadoD.API\MercadoD.API.csproj" />
-    <ProjectReference Include="..\MercadoD.Persistence.Sql.Migration\MercadoD.Persistence.Sql.Migration.csproj" />
+    <ProjectReference Include="..\MercadoD.Infra.Persistence.Sql.JobMigration\MercadoD.Infra.Persistence.Sql.JobMigration.csproj" />
   </ItemGroup>
 
   <!-- References to application projects -->

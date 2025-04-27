@@ -1,4 +1,4 @@
-﻿using MercadoD.Infrastructure.Time;
+﻿using MercadoD.Common.Time;
 using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa

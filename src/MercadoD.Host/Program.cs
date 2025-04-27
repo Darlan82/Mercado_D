@@ -21,7 +21,7 @@ var dbMercadoD = sqlServer.WithDataVolume()
 
 // 1️⃣  Console one-shot que aplica as migrações e encerra
     var migrator = builder
-        .AddProject<Projects.MercadoD_Persistence_Sql_Migration>("migrator")
+        .AddProject<Projects.MercadoD_Infra_Persistence_Sql_JobMigration>("migrator")
         .WithReference(dbMercadoD)                                   // injeta CS
         .WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName) // -> Development
         .WaitFor(dbMercadoD);                                        // só roda se o DB estiver healthy

@@ -12,6 +12,7 @@
     <PackageReference Include="MassTransit" Version="8.4.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MercadoD.Common\MercadoD.Common.csproj" />
     <ProjectReference Include="..\MercadoD.Domain\MercadoD.Domain.csproj" />
   </ItemGroup>
 

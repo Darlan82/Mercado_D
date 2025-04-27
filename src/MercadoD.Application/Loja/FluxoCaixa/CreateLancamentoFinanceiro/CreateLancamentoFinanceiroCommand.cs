@@ -1,4 +1,4 @@
-﻿using MercadoD.Infrastructure.Time;
+﻿using MercadoD.Common.Time;
 
 namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro
 {

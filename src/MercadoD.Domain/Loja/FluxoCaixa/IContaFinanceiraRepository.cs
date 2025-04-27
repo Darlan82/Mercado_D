@@ -1,4 +1,4 @@
-﻿using MercadoD.Infrastructure.Repositories;
+﻿using MercadoD.Common.Repositories;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
 {

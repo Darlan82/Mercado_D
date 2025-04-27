@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MercadoD.Infrastructure\MercadoD.Infrastructure.csproj" />
+    <ProjectReference Include="..\MercadoD.Common\MercadoD.Common.csproj" />
   </ItemGroup>
 
 </Project>

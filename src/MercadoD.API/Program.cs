@@ -1,6 +1,6 @@
 //using FluentValidation;
 using FluentValidation.AspNetCore;
-using MercadoD.Ioc;
+using MercadoD.Di.Ioc;
 
 public class Program
 {

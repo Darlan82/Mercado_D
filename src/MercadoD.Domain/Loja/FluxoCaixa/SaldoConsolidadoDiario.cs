@@ -1,4 +1,4 @@
-﻿using MercadoD.Infrastructure.ValueType;
+﻿using MercadoD.Common.ValueType;
 using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa

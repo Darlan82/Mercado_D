@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using MercadoD.Domain.Loja.FluxoCaixa;
-using MercadoD.Infrastructure.Data;
+using MercadoD.Common.Data;
 using Microsoft.Extensions.Logging;
 
 namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro

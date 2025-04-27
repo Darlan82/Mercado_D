@@ -31,7 +31,7 @@ public class LancamentoController : ControllerBase
         var client = _mediator.CreateRequestClient<GetLancamentoFinanceiroQuery>();
         var response = await client.GetResponse<LancamentoFinanceiroDto, NotFoundResponse> (query);
 
-        if (response.Is(out Response<LancamentoFinanceiroDto> ok))
+        if (response.Is(out Response<LancamentoFinanceiroDto>? ok))
             return Ok(ok.Message);
 
         return NotFound();
