@@ -3,8 +3,8 @@
 ## 1. Estratégia (Strategy)
 
 ### 1.1 Motivação do Projeto
-O projeto **"Mercado D."** surgiu da necessidade estratégica de transformar digitalmente a gestão financeira das lojas da rede. 
-Historicamente, cada unidade operava com controles manuais ou sistemas distintos, dificultando o fechamento contábil, a padronização e a visibilidade operacional. 
+O projeto **"Mercado D."** surgiu da necessidade estratégica de transformar digitalmente a gestão financeira das lojas da rede. \
+Historicamente, cada unidade operava com controles manuais ou sistemas distintos, dificultando o fechamento contábil, a padronização e a visibilidade operacional. \
 A transformação visa centralizar e modernizar os lançamentos financeiros e a consolidação de saldos em uma solução escalável baseada em nuvem.
 
 ### 1.2 Hipóteses de Inovação e Valor
