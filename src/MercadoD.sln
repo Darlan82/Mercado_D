@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Infra.Persistence.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Common", "MercadoD.Common\MercadoD.Common.csproj", "{7E5AA4A0-6D39-53BE-D075-2B46E8553173}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercadoD.Domain.Tests", "MercadoD.Domain.Tests\MercadoD.Domain.Tests.csproj", "{42D5B9B3-3C9B-4F6A-8E53-63FC580E2024}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{7E5AA4A0-6D39-53BE-D075-2B46E8553173}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E5AA4A0-6D39-53BE-D075-2B46E8553173}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E5AA4A0-6D39-53BE-D075-2B46E8553173}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42D5B9B3-3C9B-4F6A-8E53-63FC580E2024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42D5B9B3-3C9B-4F6A-8E53-63FC580E2024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42D5B9B3-3C9B-4F6A-8E53-63FC580E2024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42D5B9B3-3C9B-4F6A-8E53-63FC580E2024}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{BFD89B2B-A119-7B58-FC14-97AF41BC34F9} = {CD8B93E4-FE61-470B-85EF-2D6CA88B3984}
 		{DD966F6F-06BD-9BB7-301C-DB9A058747DD} = {CD8B93E4-FE61-470B-85EF-2D6CA88B3984}
 		{7E5AA4A0-6D39-53BE-D075-2B46E8553173} = {914D6A7E-17AD-45F2-8DB0-841EE6796824}
+		{42D5B9B3-3C9B-4F6A-8E53-63FC580E2024} = {AD1343D9-7B4F-42D5-AF60-5A0156E94D74}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8DCFD6C8-EE7E-4BFD-8D82-733FC61F5427}

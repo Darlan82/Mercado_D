@@ -1,4 +1,5 @@
 ﻿using MercadoD.Domain.Loja.FluxoCaixa.DomainEvents;
+using MercadoD.Domain.Loja.FluxoCaixa.Exceptions;
 using System.ComponentModel.DataAnnotations;
 
 namespace MercadoD.Domain.Loja.FluxoCaixa
@@ -47,7 +48,7 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
             DtPagamento = dtPagamento;
 
             if (DtPagamento.HasValue && DtPagamento.Value < DtLancamento)
-                throw new ArgumentException(nameof(dtPagamento), "Data de pagamento inválida");            
+                throw new InvalidDtPagamentoDomainException(nameof(dtPagamento));            
         }
 
         public static LancamentoFinanceiro Create(Guid contaId, decimal valor, string descricao,

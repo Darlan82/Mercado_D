@@ -26,3 +26,15 @@ a integração completa da injeção de dependência.
 A orquestração local fica a cargo do projeto `MercadoD.Host` que provisiona toda infra e configuração.
 
 ![Diagrama de Arquitetura](ArcMercadoD.png)
+
+## Testes Unitários
+
+Os testes unitários foram implementados com o `xUnit` e estão na solução dentro da sua camada respectiva.
+
+Ex.: Os testes do projeto `MercadoD.Domain.Tests` estão na mesma pasta do projeto `MercadoD.Domain`.
+
+## Domínio do Sistema
+
+### Classes principais
+
+![Domínio Classes principais](ClassesPrincipaisDominio.png)
