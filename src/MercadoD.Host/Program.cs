@@ -1,15 +1,20 @@
 ﻿// Orchestrator for MercadoD solution using .NET Aspire
-using System.Diagnostics;
+using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
 // Provisions a containerized SQL Server database when published
 IResourceBuilder<SqlServerServerResource> sqlServer;
 
-if (Debugger.IsAttached)
+var sb = builder.AddAzureServiceBus("servicebus");               
+
+//if (Debugger.IsAttached)
+if (builder.Environment.IsDevelopment())
 {
     var senha = builder.AddParameter("pwdSql", "S3nh@F0rte123!");
     sqlServer = builder.AddSqlServer("sqlserver", senha, port: 5433);
+
+    sb = sb.RunAsEmulator();
 }
 else
 {
@@ -19,49 +24,19 @@ else
 var dbMercadoD = sqlServer.WithDataVolume()
                     .AddDatabase("mercadoD");
 
-// 1️⃣  Console one-shot que aplica as migrações e encerra
-    var migrator = builder
+// Console one-shot que aplica as migrações e encerra
+var migrator = builder
         .AddProject<Projects.MercadoD_Infra_Persistence_Sql_JobMigration>("migrator")
         .WithReference(dbMercadoD)                                   // injeta CS
         .WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName) // -> Development
         .WaitFor(dbMercadoD);                                        // só roda se o DB estiver healthy
 
-// Redis container
-//var cache = builder.AddRedis("cache");
 
 var api = builder.AddProject<Projects.MercadoD_API>("api")
     .WithReference(dbMercadoD).WaitFor(dbMercadoD) //Referencia o banco e espera o banco ficar online
-    .WaitFor(migrator) // espera a aplicação da migração
+    .WithReference(sb).WaitFor(sb)
+    .WaitForCompletion(migrator) // espera a aplicação da migração
     ;
-
-//// Redis container
-//builder.AddContainer("redis", container => container
-//    .UseImage("redis:7-alpine")
-//    .ExposePort(6379));
-
-//// Enable the Aspire dashboard for basic metrics
-//builder.EnableDashboard();
-
-//// Configure OpenTelemetry tracing for the orchestrator
-//builder.Services.AddOpenTelemetryTracing(tracerBuilder =>
-//{
-//    tracerBuilder
-//        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MercadoD.Host"))
-//        .AddAspNetCoreInstrumentation()
-//        .AddHttpClientInstrumentation()
-//        .AddSqlClientInstrumentation()
-//        .AddConsoleExporter();
-//});
-
-//// Configure OpenTelemetry metrics for the orchestrator
-//builder.Services.AddOpenTelemetryMetrics(meterBuilder =>
-//{
-//    meterBuilder
-//        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MercadoD.Host"))
-//        .AddAspNetCoreInstrumentation()
-//        .AddHttpClientInstrumentation()
-//        .AddConsoleExporter();
-//});
 
 var app = builder.Build();
 app.Run();

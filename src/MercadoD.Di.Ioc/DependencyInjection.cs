@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Azure.Messaging.ServiceBus;
+using MassTransit;
 using MercadoD.Application;
 using MercadoD.Infra.Persistence.Sql;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,12 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
+using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Administration;
+using Microsoft.Extensions.Configuration;
+using Azure;
+//using MassTransit.Azure.ServiceBus.Core;          // overload com ServiceBusClient
+//using Azure.Messaging.ServiceBus;
 
 namespace MercadoD.Di.Ioc
 {
@@ -56,6 +63,9 @@ namespace MercadoD.Di.Ioc
         public static TBuilder AddDddInfrastructure<TBuilder>(this TBuilder builder)
             where TBuilder : IHostApplicationBuilder
         {
+            //Cliente do Azure Service Bus
+            builder.AddAzureServiceBusClient("servicebus");
+
             //Injeção de dependência da cama de persistencia
             builder.AddPersistence();
 
@@ -65,6 +75,8 @@ namespace MercadoD.Di.Ioc
             //Configura o Mediator
             builder.AddMediator();
 
+            
+
             return builder;
         }
 
@@ -73,13 +85,32 @@ namespace MercadoD.Di.Ioc
         {
             builder.Services.AddMediator(cfg =>
             {
-                Application.DependencyInjection.AddMediatorConsumers(cfg);
+                Application.DependencyInjection.AddMediatorConsumersLocal(cfg);
 
                 cfg.ConfigureMediator((context, cfg) =>
                 {                    
                     Infra.Persistence.Sql.DependencyInjection.ConfigMediator(context, cfg);
                 });
             });
+
+            //Configura o MassTransit
+            //builder.Services.AddMassTransit(x =>
+            //{
+            //    Application.DependencyInjection.AddMediatorConsumersBus(x);
+
+            //    //Configura o Azure Service Bus no MassTransit
+            //    x.UsingAzureServiceBus((ctx, cfg) =>
+            //    {
+            //        var client = ctx.GetRequiredService<ServiceBusClient>();
+
+            //        var cs = builder.Configuration.GetConnectionString("servicebus");
+            //        cfg.Host(cs);                    
+
+            //        Application.DependencyInjection.ConfigMessageBus(cfg, ctx);
+
+            //        Infra.Persistence.Sql.DependencyInjection.ConfigMessageBus(cfg, ctx);
+            //    });                
+            //});
 
             return builder;
         }

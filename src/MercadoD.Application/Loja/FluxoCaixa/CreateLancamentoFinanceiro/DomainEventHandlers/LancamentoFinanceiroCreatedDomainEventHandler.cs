@@ -29,6 +29,8 @@ namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro.Domain
         {
             await _unitWork.ExecuteTransactionAsync(async () =>
             {
+                _logger.LogInformation("Iniciando contabilização de saldo para o lançamento financeiro: {LancamentoId}", context.Message.id);
+
                 var lancamento = await _repository.GetByIdAsync(context.Message.id);
                 if (lancamento == null)
                     return;
@@ -37,6 +39,8 @@ namespace MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro.Domain
 
                 await ContabilizaSaldosDiarios(lancamento);
             });
+
+            _logger.LogInformation("Contabilização de saldo para o lançamento financeiro realizada: {LancamentoId}", context.Message.id);
         }
 
         private async Task ContabilizaSaldosDiarios(LancamentoFinanceiro lancamento)

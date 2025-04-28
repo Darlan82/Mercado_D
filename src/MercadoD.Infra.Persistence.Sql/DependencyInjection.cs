@@ -57,6 +57,13 @@ namespace MercadoD.Infra.Persistence.Sql
             cfg.UseConsumeFilter(typeof(EventsFilter<>), context, x => x.Include(type => !type.HasInterface<IDomainEvent>()));
         }
 
+        public static void ConfigMessageBus(IBusFactoryConfigurator cfg, IBusRegistrationContext ctx)
+        {
+            // Filtro que publica DomainEvents gerados durante o processamento de comandos
+            cfg.UseConsumeFilter(typeof(EventsFilter<>), ctx,
+                x => x.Include(type => !type.HasInterface<IDomainEvent>()));
+        }
+
         public static async Task ApplyMigration<THost>(this THost host)
             where THost : IHost
         {
