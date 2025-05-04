@@ -43,12 +43,20 @@ public class LancamentoController : ControllerBase
     /// <param name="dto">Dados do lançamento.</param>
     [HttpPost]
     [SwaggerOperation(Summary = "Cria um novo Lancamento Financeiro")]    
-    [ProducesResponseType(typeof(LancamentoFinanceiroDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CreateLancamentoFinanceiroCommandResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Post(CreateLancamentoFinanceiroCommand command)
     {
         var client = _mediator.CreateRequestClient<CreateLancamentoFinanceiroCommand>();
-        var response = await client.GetResponse<CreateLancamentoFinanceiroCommandResponse>(command);
-        return CreatedAtAction(nameof(Get), new { id = response.Message.Id }, response.Message);
+        var response = await client.GetResponse<CreateLancamentoFinanceiroCommandResponse, 
+            CreateLancamentoFinanceiroCommandResponseError>(command);
+
+        if (response.Is(out Response<CreateLancamentoFinanceiroCommandResponse>? ok))
+            return CreatedAtAction(nameof(Get), new { id = ok.Message.Id }, response.Message);
+
+        if (response.Is(out Response<CreateLancamentoFinanceiroCommandResponseError>? error))
+            return BadRequest(error.Message);
+
+        return BadRequest();
     }
 
     /// <summary>

@@ -13,21 +13,6 @@ namespace MercadoD.Infra.Persistence.Sql.Data
             _dbContext = dbContext;            
         }
 
-        public async Task CommitAsync()
-        {
-            //await SaveAsync();
-
-            if (_dbContext.Database.CurrentTransaction != null)
-            {
-                await _dbContext.Database.CommitTransactionAsync();
-            }
-        }
-
-        public void Dispose()
-        {
-            //_dbContext.Dispose();
-        }
-
         public async Task ExecuteTransactionAsync(Func<Task> operation)
         {
             var strategy = _dbContext.Database.CreateExecutionStrategy();
@@ -48,19 +33,6 @@ namespace MercadoD.Infra.Persistence.Sql.Data
                 }
             });
         }
-
-        //public async Task<IDbTransaction> BeginTransactionAsync()
-        //{
-        //    return new DbTransaction(await _dbContext.Database.BeginTransactionAsync());
-        //}
-
-        //public async Task RollbackAsync()
-        //{
-        //    if (_dbContext.Database.CurrentTransaction != null)
-        //    {
-        //        await _dbContext.Database.RollbackTransactionAsync();
-        //    }
-        //}
 
         public async Task SaveAsync()
         {

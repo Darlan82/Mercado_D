@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MassTransit.Mediator;
 using MercadoD.Domain;
 using MercadoD.Infra.Persistence.Sql.Data;
 
@@ -8,12 +7,12 @@ namespace MercadoD.Infra.Persistence.Sql.Filters
     internal class EventsFilter<T> : IFilter<ConsumeContext<T>> where T : class
     {
         private readonly MercadoEFContext _context;
-        private readonly IMediator _mediator;
+        private readonly IPublishEndpoint _sendEndpointProvider;
 
-        public EventsFilter(MercadoEFContext context, IMediator mediator)
+        public EventsFilter(MercadoEFContext context, IPublishEndpoint sendEndpointProvider)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _sendEndpointProvider = sendEndpointProvider ?? throw new ArgumentNullException(nameof(sendEndpointProvider));
         }
 
         public void Probe(ProbeContext context) { }
@@ -30,7 +29,8 @@ namespace MercadoD.Infra.Persistence.Sql.Filters
 
             foreach (var entity in events)
             {
-                await _mediator.Publish(entity);
+                var type = entity.GetType();
+                await _sendEndpointProvider.Publish(entity, type);
             }
         }
     }

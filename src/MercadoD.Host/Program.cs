@@ -1,4 +1,6 @@
 ﻿// Orchestrator for MercadoD solution using .NET Aspire
+using Aspire.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -6,7 +8,6 @@ var builder = DistributedApplication.CreateBuilder(args);
 // Provisions a containerized SQL Server database when published
 IResourceBuilder<SqlServerServerResource> sqlServer;
 
-var sb = builder.AddAzureServiceBus("servicebus");               
 
 //if (Debugger.IsAttached)
 if (builder.Environment.IsDevelopment())
@@ -14,12 +15,15 @@ if (builder.Environment.IsDevelopment())
     var senha = builder.AddParameter("pwdSql", "S3nh@F0rte123!");
     sqlServer = builder.AddSqlServer("sqlserver", senha, port: 5433);
 
-    sb = sb.RunAsEmulator();
+    //var serviceBus = builder.AddConnectionString("servicebus");
 }
 else
 {
     sqlServer = builder.AddSqlServer("sqlserver");
+    
 }
+
+//sb.AddServiceBusQueue("lancamento-financeiro");
 
 var dbMercadoD = sqlServer.WithDataVolume()
                     .AddDatabase("mercadoD");
@@ -33,10 +37,22 @@ var migrator = builder
 
 
 var api = builder.AddProject<Projects.MercadoD_API>("api")
-    .WithReference(dbMercadoD).WaitFor(dbMercadoD) //Referencia o banco e espera o banco ficar online
-    .WithReference(sb).WaitFor(sb)
+    .WithReference(dbMercadoD).WaitFor(dbMercadoD)     
     .WaitForCompletion(migrator) // espera a aplicação da migração
     ;
+
+if (builder.Environment.IsDevelopment())
+{
+    //var connSb = builder.Configuration.GetConnectionString("servicebus");
+    var serviceBus = builder.AddConnectionString("servicebus");
+    api.WithReference(serviceBus);
+}
+else
+{
+    var sb = builder.AddAzureServiceBus("servicebus");
+    api.WithReference(sb)
+        .WaitFor(sb);
+}
 
 var app = builder.Build();
 app.Run();

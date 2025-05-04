@@ -36,7 +36,7 @@ namespace MercadoD.Domain.Loja.FluxoCaixa
             Valor = valor;
             Descricao = descricao ?? throw new ArgumentNullException(nameof(descricao));
 
-            AddDomainEvent(new LancamentoFinanceiroCreatedDomainEvent(Id, ContaId));
+            AddDomainEvent(new LancamentoFinanceiroCreatedDomainEvent() { Id = Id, ContaId = ContaId });
         }
 
         private LancamentoFinanceiro(Guid contaId, decimal valor, string descricao,

@@ -1,11 +1,7 @@
 ﻿namespace MercadoD.Common.Data
 {
-    public interface IUnitWork : IDisposable
+    public interface IUnitWork
     {
-        //void Commit();
-
-        //void Rollback();
-
         Task ExecuteTransactionAsync(Func<Task> operation);
 
         Task SaveAsync();

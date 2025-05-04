@@ -4,6 +4,8 @@ using MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro;
 using MercadoD.Application.Loja.FluxoCaixa.CreateLancamentoFinanceiro.DomainEventHandlers;
 using MercadoD.Application.Loja.FluxoCaixa.GetContaFinanceira;
 using MercadoD.Application.Loja.FluxoCaixa.GetLancamentoFinanceiro;
+using MercadoD.Domain;
+using MercadoD.Domain.Loja.FluxoCaixa.DomainEvents;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -21,6 +23,7 @@ namespace MercadoD.Application
 
         public static void AddMediatorConsumersLocal(IMediatorRegistrationConfigurator cfg)
         {
+            //Exemplo caso seja automáticos para todos os tipos
             //cfg.AddConsumers(typeof(CreateLancamentoFinanceiroCommandHandler).Assembly);
 
             cfg.AddConsumer<CreateLancamentoFinanceiroCommandHandler>();
@@ -28,12 +31,8 @@ namespace MercadoD.Application
             cfg.AddConsumer<GetContaFinanceiraHandler>();
             cfg.AddConsumer<GetPagedContaFinanceiraHandler>();
 
-
             cfg.AddRequestClient<GetAllContaFinanceiraQuery>();
             cfg.AddRequestClient<GetContaFinanceiraQuery>();
-
-            //Eventos de Domínio
-            cfg.AddConsumer<LancamentoFinanceiroCreatedDomainEventHandler>();
 
             // middleware reutilizável (opcional)
             //cfg.UseMessageRetry(r => r.Interval(3, 500));        
@@ -41,28 +40,24 @@ namespace MercadoD.Application
 
         public static void AddMediatorConsumersBus(IBusRegistrationConfigurator cfg)
         {
+            cfg.SetKebabCaseEndpointNameFormatter();
+
             //Eventos de Domínio
-            cfg.AddConsumer<LancamentoFinanceiroCreatedDomainEventHandler>();            
+            cfg.AddConsumer<LancamentoFinanceiroCreatedDomainEventHandler>();
         }
 
         public static void ConfigMessageBus(IBusFactoryConfigurator cfg, IBusRegistrationContext ctx)
         {
-            // Endpoint para comandos de criação de lançamento financeiro
-            //cfg.ReceiveEndpoint("lancamento-financeiro", e =>
-            //{
-            //    // Para comandos utilizamos um endpoint dedicado sem a topologia de publish/subscribe
-            //    e.ConfigureConsumeTopology = false;
-            //    e.ConfigureConsumer<CreateLancamentoFinanceiroCommandHandler>(ctx);
-            //});
+            cfg.Message<IDomainEvent>(m => m.SetEntityName("domain-event-entity"));
 
-            // Endpoint para processar eventos de domínio
-            cfg.ReceiveEndpoint("lancamento-financeiro", e =>
+            #region Lançamento Financeiro            
+            const string prefixLancFin = "lancamento-financeiro";
+            cfg.Message<LancamentoFinanceiroCreatedDomainEvent>(m => m.SetEntityName(prefixLancFin + "-entity"));
+            cfg.ReceiveEndpoint(prefixLancFin+ "-queue", e =>
             {
-                // Mantém a topologia padrão para que o subscription seja criado automaticamente
-                e.ConfigureConsumer<LancamentoFinanceiroCreatedDomainEventHandler>(ctx);
+                e.ConfigureConsumer<LancamentoFinanceiroCreatedDomainEventHandler>(ctx);                
             });
-
-            
+            #endregion
         }
     }
 }

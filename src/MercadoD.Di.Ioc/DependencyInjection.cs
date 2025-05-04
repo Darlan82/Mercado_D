@@ -4,15 +4,10 @@ using MercadoD.Application;
 using MercadoD.Infra.Persistence.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Administration;
-using Microsoft.Extensions.Configuration;
-using Azure;
-//using MassTransit.Azure.ServiceBus.Core;          // overload com ServiceBusClient
-//using Azure.Messaging.ServiceBus;
 
 namespace MercadoD.Di.Ioc
 {
@@ -66,6 +61,9 @@ namespace MercadoD.Di.Ioc
             //Cliente do Azure Service Bus
             builder.AddAzureServiceBusClient("servicebus");
 
+            //Teste se carregou ConnectionString
+            //var css = builder.Configuration.GetConnectionString("servicebus");
+
             //Injeção de dependência da cama de persistencia
             builder.AddPersistence();
 
@@ -74,8 +72,6 @@ namespace MercadoD.Di.Ioc
 
             //Configura o Mediator
             builder.AddMediator();
-
-            
 
             return builder;
         }
@@ -94,23 +90,28 @@ namespace MercadoD.Di.Ioc
             });
 
             //Configura o MassTransit
-            //builder.Services.AddMassTransit(x =>
-            //{
-            //    Application.DependencyInjection.AddMediatorConsumersBus(x);
+            builder.Services.AddMassTransit(x =>
+            {
+                Application.DependencyInjection.AddMediatorConsumersBus(x);
 
-            //    //Configura o Azure Service Bus no MassTransit
-            //    x.UsingAzureServiceBus((ctx, cfg) =>
-            //    {
-            //        var client = ctx.GetRequiredService<ServiceBusClient>();
+                //Configura o Azure Service Bus no MassTransit
+                x.UsingAzureServiceBus((ctx, cfg) =>
+                {
+                    var client = ctx.GetRequiredService<ServiceBusClient>();
 
-            //        var cs = builder.Configuration.GetConnectionString("servicebus");
-            //        cfg.Host(cs);                    
+                    var cs = builder.Configuration.GetConnectionString("servicebus");                    
+                    cfg.Host(cs);
 
-            //        Application.DependencyInjection.ConfigMessageBus(cfg, ctx);
+                    Application.DependencyInjection.ConfigMessageBus(cfg, ctx);
 
-            //        Infra.Persistence.Sql.DependencyInjection.ConfigMessageBus(cfg, ctx);
-            //    });                
-            //});
+                    Infra.Persistence.Sql.DependencyInjection.ConfigMessageBus(cfg, ctx);
+
+                    // Configurações avançadas
+                    //cfg.UseMessageRetry(r => r.Intervals(100, 500, 1000));
+                    //cfg.PrefetchCount = 10;
+                    //cfg.ConcurrentMessageLimit = 5;
+                });
+            });
 
             return builder;
         }
