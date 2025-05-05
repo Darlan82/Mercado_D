@@ -2,8 +2,7 @@
 
 ## 1. Ambiente de desenvolvimento
 
-Este projeto é um Host do .Net Aspire. \
-Ele provisiona e orquestra toda infra estrutura localmente. \
+Este projeto usa um Host do .Net Aspire para provisionar e orquestra toda infra estrutura localmente. \
 Para rodar é necessário estar com o docker e estar rodando.
 
 ### 1.1 Banco de dados
