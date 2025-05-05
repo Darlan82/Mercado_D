@@ -1,32 +1,27 @@
 ﻿// Orchestrator for MercadoD solution using .NET Aspire
 using Aspire.Hosting;
-using Microsoft.Extensions.Configuration;
+using Azure.Provisioning.ServiceBus;
 using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-// Provisions a containerized SQL Server database when published
-IResourceBuilder<SqlServerServerResource> sqlServer;
+IResourceBuilder<IResourceWithConnectionString> dbMercadoD;
 
+const string sqlName = "sqlserver", dbName = "mercadoD";
 
-//if (Debugger.IsAttached)
-if (builder.Environment.IsDevelopment())
+if (!builder.ExecutionContext.IsPublishMode)
 {
     var senha = builder.AddParameter("pwdSql", "S3nh@F0rte123!");
-    sqlServer = builder.AddSqlServer("sqlserver", senha, port: 5433);
-
-    //var serviceBus = builder.AddConnectionString("servicebus");
+    dbMercadoD = (IResourceBuilder<IResourceWithConnectionString>)
+    builder.AddSqlServer(sqlName, senha, port: 5433) // Provisions a containerized SQL Server database when published
+      .WithDataVolume() //Opicional - Mantem os dados entre as builds
+      .AddDatabase(dbName);
 }
 else
 {
-    sqlServer = builder.AddSqlServer("sqlserver");
-    
+    dbMercadoD = builder.AddAzureSqlServer(sqlName)                        
+                       .AddDatabase(dbName);
 }
-
-//sb.AddServiceBusQueue("lancamento-financeiro");
-
-var dbMercadoD = sqlServer.WithDataVolume()
-                    .AddDatabase("mercadoD");
 
 // Console one-shot que aplica as migrações e encerra
 var migrator = builder
@@ -41,15 +36,27 @@ var api = builder.AddProject<Projects.MercadoD_API>("api")
     .WaitForCompletion(migrator) // espera a aplicação da migração
     ;
 
-if (builder.Environment.IsDevelopment())
+if (!builder.ExecutionContext.IsPublishMode)
 {
-    //var connSb = builder.Configuration.GetConnectionString("servicebus");
     var serviceBus = builder.AddConnectionString("servicebus");
     api.WithReference(serviceBus);
 }
 else
 {
-    var sb = builder.AddAzureServiceBus("servicebus");
+    var sb = builder.AddAzureServiceBus("servicebus")
+        .ConfigureInfrastructure(infra =>
+        {
+            var serviceBusNamespace = infra.GetProvisionableResources()
+                                           .OfType<ServiceBusNamespace>()
+                                           .Single();
+
+            serviceBusNamespace.Sku = new ServiceBusSku
+            {
+                Name = ServiceBusSkuName.Standard
+            };
+            //serviceBusNamespace.Tags.Add("ExampleKey", "Example value");
+        });
+
     api.WithReference(sb)
         .WaitFor(sb);
 }
