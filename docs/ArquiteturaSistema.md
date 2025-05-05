@@ -27,14 +27,25 @@ A orquestração local fica a cargo do projeto `MercadoD.Host` que provisiona to
 
 ![Diagrama de Arquitetura](ArcMercadoD.png)
 
-## Testes Unitários
+## 3. Testes Unitários
 
 Os testes unitários foram implementados com o `xUnit` e estão na solução dentro da sua camada respectiva.
 
 Ex.: Os testes do projeto `MercadoD.Domain.Tests` estão na mesma pasta do projeto `MercadoD.Domain`.
 
-## Domínio do Sistema
+## 4. Domínio do Sistema
 
-### Classes principais
+### 4.1. Classes principais
 
 ![Domínio Classes principais](ClassesPrincipaisDominio.png)
+
+### 4.2. Fluxo criação de lançamento
+
+![Diagrama de Sequencia](Sequencia_1.png)
+
+A API valida os dados, grava o lançamento no banco de dados e envia para o `Service Bus` o evento 
+de domínio `LancamentoFinanceiroCreatedDomainEvent`. 
+
+Posteriormente o Worker presenta na `API` consumirá o evento e realizará a contabilização dos saldos da conta e saldos diários. \
+O sistema funcina com `Saldo Previsto` e `Saldo Realizado`, ou seja tem regra implementada quanto a data de pagamento.\
+Essa abordagem visa dar uma visão de previsão de saldo da conta financeira.

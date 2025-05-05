@@ -21,7 +21,7 @@ namespace MercadoD.Application
             return builder;
         }
 
-        public static void AddMediatorConsumersLocal(IMediatorRegistrationConfigurator cfg)
+        public static void AddMediatorConsumersLocal(IRegistrationConfigurator cfg)
         {
             //Exemplo caso seja automáticos para todos os tipos
             //cfg.AddConsumers(typeof(CreateLancamentoFinanceiroCommandHandler).Assembly);

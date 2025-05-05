@@ -145,7 +145,7 @@ O diagrama lógico representa a interação dos componentes mencionados acima co
 
 ### 4.4 Diagrama de Casos de Uso (UML)
 Atores:
-- **Caixa:** interage com a API para registrar lançamentos
+- **Financeiro:** interage com a API para registrar lançamentos
 - **Gerente:** consulta saldos consolidados, exporta relatórios
 - **Sistema Fiscal:** consome API externa para integração tributária
 
