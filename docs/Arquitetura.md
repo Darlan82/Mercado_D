@@ -138,7 +138,7 @@ O diagrama lógico representa a interação dos componentes mencionados acima co
 
 1.	O ator (caixa) realiza um lançamento via aplicativo (mobile/web)
 2.	O front-end chama a API de Lançamentos exposta via API Management
-3.	A API grava em Azure SQL e publica evento no Service Bus
+3.	A API grava em Azure SQL e publica evento de domíno no Service Bus
 4.	A Azure Function consome o evento e atualiza a consolidação no Redis
 5.	O gerente ou sistema externo consulta os dados consolidados via API
 [Diagrama lógico será incluído na versão final com Visio ou Draw.io]

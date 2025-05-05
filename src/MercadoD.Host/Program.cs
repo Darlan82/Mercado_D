@@ -1,7 +1,5 @@
 ﻿// Orchestrator for MercadoD solution using .NET Aspire
-using Aspire.Hosting;
 using Azure.Provisioning.ServiceBus;
-using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
@@ -36,10 +34,25 @@ var api = builder.AddProject<Projects.MercadoD_API>("api")
     .WaitForCompletion(migrator) // espera a aplicação da migração
     ;
 
+
+const string domainMessageTypeInfra = "DomainMessageTypeInfra";
 if (!builder.ExecutionContext.IsPublishMode)
 {
-    var serviceBus = builder.AddConnectionString("servicebus");
-    api.WithReference(serviceBus);
+    var senha = builder.AddParameter("pwdRMq", "1234");
+    var username = builder.AddParameter("userRMq", "adm");
+
+    var rabbitmq = builder.AddRabbitMQ("rabbitmq", userName: username, password: senha)
+                    //.WithEnvironment("deprecated_features.permit.management_metrics_collection", "false")
+                    .WithManagementPlugin()
+                    .WithDataVolume(isReadOnly: false)
+                    ;
+
+    api.WithEnvironment(domainMessageTypeInfra, "RabbitMQ")
+        .WithReference(rabbitmq)
+        .WaitFor(rabbitmq);
+
+    //var serviceBus = builder.AddConnectionString("servicebus");
+    //api.WithReference(serviceBus);
 }
 else
 {
@@ -57,7 +70,8 @@ else
             //serviceBusNamespace.Tags.Add("ExampleKey", "Example value");
         });
 
-    api.WithReference(sb)
+    api.WithEnvironment(domainMessageTypeInfra, "AzureServiceBus")
+        .WithReference(sb)
         .WaitFor(sb);
 }
 

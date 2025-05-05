@@ -35,4 +35,19 @@ sua definição está na classe `DbDevInitializer` no projeto `MercadoD.Infra.Pe
 
 Para saber como trabalhar com a migração do Banco de Dados veja o documento [MercadoD.Infra.Persistence.Sql](../MercadoD.Infra.Persistence.Sql/README.md).
 
+### 1.2 Bus de mensagens
+
+O Host do Aspire provisionará uma imagem do `RabbitMQ` via `Docker` na inicialização do Host com painel de controle. \
+O usuário padrão é `adm` e a senha também é `1234`. \
+
+Obs.: Fora do ambiente de desenvolvimento o aspire está configurado para usar o `Azure Service Bus`. \
+**Importante:** O emulador do `Azure Service Bus` não é suporta tarefaz administrativas usando o SDK e
+a biblioteca `MassTransit` precisa desses recursos administrativos, então para ambiente de desenvolvimento 
+foi escolhido o `RabbitMQ` como bus de mensagens. 
+
 ## 2. Ambiente de Produção e homologação
+
+O Host do Aspire pode ser usado para gerar parte de infra estrutura de produção e homologação. \
+Recomendamos o gerar os scripts para Biceps e colocar nas pasta [/infra](/infra). 
+
+O deploy da aplicação deve ficar na pasta de projeto.

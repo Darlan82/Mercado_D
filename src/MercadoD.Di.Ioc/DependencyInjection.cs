@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging.ServiceBus;
 using MassTransit;
 using MercadoD.Application;
+using MercadoD.Common.Config;
 using MercadoD.Infra.Persistence.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -58,11 +59,17 @@ namespace MercadoD.Di.Ioc
         public static TBuilder AddDddInfrastructure<TBuilder>(this TBuilder builder)
             where TBuilder : IHostApplicationBuilder
         {
-            //Cliente do Azure Service Bus
-            builder.AddAzureServiceBusClient("servicebus");
-
-            //Teste se carregou ConnectionString
-            //var css = builder.Configuration.GetConnectionString("servicebus");
+            switch (DomainMessage.TypeInfra)
+            {
+                case DomainMessage.DomainMessageTypeInfra.ServiceBus:
+                    //Cliente do Azure Service Bus
+                    builder.AddAzureServiceBusClient("servicebus");
+                    break;
+                case DomainMessage.DomainMessageTypeInfra.RabbitMQ:
+                    //Cliente do RabbitMQ
+                    builder.AddRabbitMQClient("rabbitmq");
+                    break;
+            }
 
             //Injeção de dependência da cama de persistencia
             builder.AddPersistence();
@@ -94,23 +101,37 @@ namespace MercadoD.Di.Ioc
             {
                 Application.DependencyInjection.AddMediatorConsumersBus(x);
 
-                //Configura o Azure Service Bus no MassTransit
-                x.UsingAzureServiceBus((ctx, cfg) =>
+                switch (DomainMessage.TypeInfra)
                 {
-                    var client = ctx.GetRequiredService<ServiceBusClient>();
+                    case DomainMessage.DomainMessageTypeInfra.ServiceBus:
+                        {
+                            //Configura o Azure Service Bus no MassTransit
+                            x.UsingAzureServiceBus((ctx, cfg) =>
+                            {
+                                var cs = builder.Configuration.GetConnectionString("servicebus");
+                                cfg.Host(cs);
 
-                    var cs = builder.Configuration.GetConnectionString("servicebus");                    
-                    cfg.Host(cs);
+                                Application.DependencyInjection.ConfigMessageBus(cfg, ctx);
+                                Infra.Persistence.Sql.DependencyInjection.ConfigMessageBus(cfg, ctx);
+                            });
+                            break;
+                        }
+                    case DomainMessage.DomainMessageTypeInfra.RabbitMQ:
+                        {
+                            //Configura o RabbitMQ no MassTransit
+                            x.UsingRabbitMq((ctx, cfg) =>
+                            {
+                                var cs = builder.Configuration.GetConnectionString("rabbitmq");
+                                cfg.Host(cs);
 
-                    Application.DependencyInjection.ConfigMessageBus(cfg, ctx);
-
-                    Infra.Persistence.Sql.DependencyInjection.ConfigMessageBus(cfg, ctx);
-
-                    // Configurações avançadas
-                    //cfg.UseMessageRetry(r => r.Intervals(100, 500, 1000));
-                    //cfg.PrefetchCount = 10;
-                    //cfg.ConcurrentMessageLimit = 5;
-                });
+                                Application.DependencyInjection.ConfigMessageBus(cfg, ctx);
+                                Infra.Persistence.Sql.DependencyInjection.ConfigMessageBus(cfg, ctx);
+                            });
+                        }
+                        break;
+                    default:
+                        throw new NotSupportedException($"Tipo de infra não suportado: {DomainMessage.TypeInfra}");
+                }
             });
 
             return builder;
